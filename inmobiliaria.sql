@@ -376,22 +376,78 @@ END$$
 DELIMITER ;
 
 -- DATOS DE PRUEBA
+USE inmobiliaria;
 
-INSERT INTO tipo_propiedad VALUES (NULL,'Casa'),(NULL,'Apartamento'),(NULL,'Local');
-INSERT INTO estado_propiedad VALUES (NULL,'Disponible'),(NULL,'Arrendada'),(NULL,'Vendida');
-INSERT INTO tipo_contrato VALUES (NULL,'Venta'),(NULL,'Arriendo');
-INSERT INTO estado_contrato VALUES (NULL,'Activo'),(NULL,'Finalizado');
-INSERT INTO estado_pago VALUES (NULL,'Pendiente'),(NULL,'Aprobado');
-INSERT INTO metodo_pago VALUES (NULL,'Transferencia'),(NULL,'Efectivo');
+INSERT IGNORE INTO tipo_propiedad (tipo_propiedad_id, nombre) VALUES
+(1,'Casa'),
+(2,'Apartamento'),
+(3,'Local Comercial'),
+(4,'Oficina');
 
-INSERT INTO agente VALUES (NULL,'Carlos Pérez','LIC-001','3001112222','carlos@inmo.com');
-INSERT INTO cliente VALUES (NULL,'Ana Gómez','CC123','3015556666','ana@gmail.com','Calle 10');
+INSERT IGNORE INTO estado_propiedad (estado_propiedad_id, nombre) VALUES
+(1,'Disponible'),
+(2,'Vendida'),
+(3,'Alquilada'),
+(4,'Reservada');
 
-INSERT INTO propiedad
-VALUES (NULL,'PROP-001','Av Central 123','Bogotá',120,3,2,350000000,CURDATE(),1,1,1);
+INSERT IGNORE INTO tipo_contrato (tipo_contrato_id, nombre) VALUES
+(1,'Venta'),
+(2,'Arriendo');
 
-INSERT INTO contrato
-VALUES (NULL,'CONT-001','2025-01-01','2025-12-31',CURDATE(),350000000,1,1,1,1,1);
+INSERT IGNORE INTO estado_contrato (estado_contrato_id, nombre) VALUES
+(1,'Activo'),
+(2,'Finalizado'),
+(3,'Cancelado');
 
-INSERT INTO pago
-VALUES (NULL,1,CURDATE(),50000000,2,1,'REF001');
+-- estado_pago
+INSERT INTO estado_pago (nombre)
+SELECT 'Pendiente' WHERE NOT EXISTS (SELECT 1 FROM estado_pago WHERE nombre='Pendiente');
+INSERT INTO estado_pago (nombre)
+SELECT 'Aprobado' WHERE NOT EXISTS (SELECT 1 FROM estado_pago WHERE nombre='Aprobado');
+
+-- metodo_pago
+INSERT INTO metodo_pago (nombre)
+SELECT 'Transferencia' WHERE NOT EXISTS (SELECT 1 FROM metodo_pago WHERE nombre='Transferencia');
+INSERT INTO metodo_pago (nombre)
+SELECT 'Efectivo' WHERE NOT EXISTS (SELECT 1 FROM metodo_pago WHERE nombre='Efectivo');
+
+INSERT IGNORE INTO agente (agente_id, nombre, telefono, email) VALUES
+(1,'Carlos Gómez','3104567890','carlos@inmo.com'),
+(2,'Laura Martínez','3115678901','laura@inmo.com'),
+(3,'Andrés Torres','3126789012','andres@inmo.com'),
+(4,'Diana Ruiz','3137890123','diana@inmo.com');
+
+INSERT IGNORE INTO cliente (cliente_id, nombre, telefono, email) VALUES
+(1,'Juan Pérez','3101112233','juan@gmail.com'),
+(2,'María López','3112223344','maria@gmail.com'),
+(3,'Pedro Ramírez','3123334455','pedro@gmail.com'),
+(4,'Ana Torres','3134445566','ana@gmail.com'),
+(5,'Luis Castro','3145556677','luis@gmail.com');
+
+
+INSERT IGNORE INTO propiedad
+(propiedad_id,codigo,direccion,ciudad,area_m2,habitaciones,banos,precio,fecha_registro,tipo_propiedad_id,estado_propiedad_id,agente_id)
+VALUES
+(1,'PROP-001','Cra 10 #20-30','Bogotá',120,3,2,350000000,CURDATE(),1,1,1),
+(2,'PROP-002','Cra 15 #20-30','Medellín',90,2,2,280000000,CURDATE(),2,1,2),
+(3,'PROP-003','Calle 50 #40-20','Bogotá',110,3,2,420000000,CURDATE(),1,1,2),
+(4,'PROP-004','Cra 70 #30-15','Medellín',80,2,1,260000000,CURDATE(),2,1,3),
+(5,'PROP-005','Av Principal #100','Cali',150,4,3,600000000,CURDATE(),1,1,1),
+(6,'PROP-006','Calle 12 #8-45','Barranquilla',70,2,1,180000000,CURDATE(),2,1,4);
+
+INSERT IGNORE INTO contrato
+(contrato_id,numero,fecha_inicio,fecha_fin,fecha_firma,valor_total,tipo_contrato_id,estado_contrato_id,propiedad_id,cliente_id,agente_id)
+VALUES
+(1,'CONT-001','2025-01-01','2025-12-31',CURDATE(),24000000,2,1,1,1,1),
+(2,'CONT-002','2025-02-01',NULL,CURDATE(),420000000,1,1,2,2,2),
+(3,'CONT-003','2025-03-01','2026-03-01',CURDATE(),18000000,2,1,3,3,3),
+(4,'CONT-004','2025-01-15','2025-12-15',CURDATE(),20000000,2,1,4,4,4);
+
+INSERT IGNORE INTO pago
+(pago_id,fecha_pago,monto,contrato_id)
+VALUES
+(1,CURDATE(),2000000,1),
+(2,CURDATE(),2000000,1),
+(3,CURDATE(),35000000,2),
+(4,CURDATE(),1500000,3),
+(5,CURDATE(),1500000,3);
