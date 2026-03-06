@@ -481,3 +481,4 @@ ON sum (valor), AS total_vendido,
 COUNT(DISTINCT c.clientes)
 >>>>>>> a6dfab1 (examen)
 
+ya que
