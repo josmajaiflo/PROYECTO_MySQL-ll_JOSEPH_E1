@@ -453,4 +453,31 @@ VALUES
 (4,3,CURDATE(),1500000,1,1),
 (5,3,CURDATE(),1500000,1,2);
 
+-- consultas
+
+SELECT
+a.nombre AS vendedor,
+p.propiedad
+ON contrato.c
+GHT JOIN agente a
+ON c.agente_id = a.agente_id
+FT JOIN propiedad a
+ON c.agente_id = a.agente_id
+
+
+SELECT
+p.propiedad_id,
+p.valor
+FROM propiedad p
+JOIN contrato c
+ON p.propiedad_id = c.propiedad
+WHERE p.valor BETWEEN 150000000 AND 400000000;
+
+
+CREATE VIEW vista_resumen_ventas AS
+SELECT
+a.nombre AS venderdor,
+ON sum (valor), AS total_vendido,
+COUNT(DISTINCT c.clientes)
+>>>>>>> a6dfab1 (examen)
 
