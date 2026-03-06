@@ -17,10 +17,6 @@ Sistema de Gestión Inmobiliaria – Proyecto MySQL II
 
  Instalación y ejecución
 
-1. Yo utilicé MySQL 8.x o superior instalado.
-2. Puedes usar MySQL Workbench o tu cliente SQL preferido.
-3. Ejecuta el script `inmobiliaria.sql` por bloques, en este orden:
-
    1. Creación de base de datos y uso (`CREATE DATABASE` / `USE`).
    2. Tablas de apoyo (catálogos).
    3. Tablas principales (`propiedad`, `cliente`, `contrato`, `pago`).
@@ -85,3 +81,6 @@ Usuarios de ejemplo:
 - Total de propiedades disponibles por tipo: `SELECT total_propiedades_disponibles(1) AS total_casas;`
 - Ver auditoría de propiedades: `SELECT * FROM auditoria_propiedad ORDER BY fecha_evento DESC;`
 - Reporte de pagos pendientes: `SELECT * FROM reporte_pagos_pendientes ORDER BY fecha_generacion DESC;`
+
+
+
